@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # Path to your collectd installation.
-export COLLECTD_HOME=$HOME/arcus-collectd
+# export COLLECTD_HOME=$HOME/arcus-collectd
 
 # Path to your hubble installation.
-export HUBBLE_HOME=$HOME/arcus-hubble
+# export HUBBLE_HOME=$HOME/arcus-hubble
 
 # Path to store RRD files.
-export COLLECTD_RRD_DATADIR=$HOME/hubble_data
+# export COLLECTD_RRD_DATADIR=$HOME/hubble_data
 
 # Identify current IP automatically. Change it if you want to specify IP.
-export COLLECTD_LISTENER_IP=`/sbin/ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -n 1`
+export COLLECTD_LISTENER_IP=`ip addr | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -n 1`
 
 # Collectd listener port for interval 5 sec.
 export COLLECTD_LISTENER_5S_PORT="25828"
@@ -19,7 +19,7 @@ export COLLECTD_LISTENER_5S_PORT="25828"
 export COLLECTD_LISTENER_1M_PORT="25829"
 
 # ZooKeeper hosts
-export HUBBLE_ZOOKEEPER_HOSTS="10.0.0.1:2181,10.0.0.2:2181,10.0.0.3:2181"
+export HUBBLE_ZOOKEEPER_HOSTS="arcus-zookeeper:2181"
 
 # Hubble Orbiter Port
 # - Orbiter watches Arcus directories in ZooKeeper.
