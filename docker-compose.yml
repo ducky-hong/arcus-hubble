@@ -1,0 +1,44 @@
+version: '2'
+services:
+  zookeeper:
+    image: arcus/arcus-zookeeper
+    environment:
+      - CLUSTER_MAPPING=test;172.16.238.100:11211
+  collectd-server:
+    image: arcus/arcus-collectd-server
+    volumes:
+      - /var/lib/collectd/rrd
+  memcached:
+    image: arcus/arcus-memcached-collectd
+    command: memcached -u memcached -p 11211 -E /usr/local/lib/default_engine.so -z zookeeper:2181
+    links:
+      - zookeeper
+      - collectd-server
+    environment:
+      - COLLECTD_LISTENER_IP=collectd-server
+    container_name: arcus-memcached
+    hostname: arcus-memcached
+    networks:
+      default:
+        ipv4_address: 172.16.238.100
+  hubble:
+    image: arcus/arcus-hubble
+    links:
+      - zookeeper
+    volumes_from:
+      - collectd-server
+    ports:
+      - "3000:3000"
+      - "8080:8080"
+      - "25832:25832"
+    environment:
+      - HUBBLE_ZOOKEEPER_HOSTS=zookeeper:2181
+      - COLLECTD_RRD_DATADIR=/var/lib/collectd/rrd
+      - COLLECTD_LISTENER_IP=localhost
+      - COMPOSE_NETWORK_NAME=arcushubble_default
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.16.238.0/24
+          gateway: 172.16.238.1
