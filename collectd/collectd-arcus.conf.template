@@ -4,8 +4,8 @@ Interval     5
 LoadPlugin logfile
 
 <Plugin logfile>
-  LogLevel err
-  #File "${COLLECTD_HOME}/var/log/collectd-arcus.log"
+  LogLevel info
+  File "${COLLECTD_HOME}/var/log/collectd-arcus.log"
   File stderr
   Timestamp true
 </Plugin>

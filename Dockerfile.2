@@ -1,0 +1,13 @@
+FROM cs494/arcus-hubble
+
+RUN rm view/modules/config.js
+ADD config.js view/modules/config.js
+ADD conf-orbiter.json conf/conf-orbiter.json
+ADD lib/hubble-rrd.js lib/hubble-rrd.js
+ADD lib/rrd/rrddir.js lib/rrd/rrddir.js
+ADD directives.js view/modules/directives.js
+ADD lib/orbiter/orbiter.js lib/orbiter/orbiter.js
+
+RUN cd /arcus-hubble && npm install https://github.com/Orion98MC/node_rrd.git
+
+CMD ["./start.sh"]

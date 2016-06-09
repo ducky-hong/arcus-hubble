@@ -1,0 +1,14 @@
+{
+  "port": "3000",
+  "zookeepers": {
+      "default": "arcus-zookeeper:2181"
+  },
+  "log": {
+      "file": "/arcus-hubble/log/hubble-orbiter.log"
+    , "level": "info"
+  },
+  "hubble": {
+      "test": "localhost:25832"
+  }
+}
+

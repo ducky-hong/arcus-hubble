@@ -1,0 +1,5 @@
+<Include "${COLLECTD_HOME}/etc/collectd.conf.d">
+	Filter "*.conf"
+</Include>
+
+TypesDB "${COLLECTD_HOME}/share/collectd/types.db"

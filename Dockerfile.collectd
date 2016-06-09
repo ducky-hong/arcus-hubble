@@ -1,0 +1,20 @@
+FROM phusion/baseimage:0.9.15
+
+RUN apt-get update \
+        && apt-get install -y --no-install-recommends \
+            collectd libpython2.7
+
+ENV COLLECTD_HOME /arcus-collectd
+ENV COLLECTD_LISTENER_IP localhost
+ENV COLLECTD_LISTENER_5S_PORT 25828
+ENV COLLECTD_LISTENER_1M_PORT 25829
+ENV COLLECTD_RRD_DATADIR /hubble_data
+
+ADD *.sh /arcus-collectd/
+ADD collectd /arcus-collectd/collectd
+
+RUN mkdir -p /etc/service/collectd
+ADD collectd.sh /etc/service/collectd/run
+
+CMD ["/sbin/my_init"]
+
