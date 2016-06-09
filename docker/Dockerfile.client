@@ -1,0 +1,18 @@
+FROM arcus/arcus-memcached:latest
+
+ENV COLLECTD_LISTENER_5S_PORT 25828
+ENV COLLECTD_LISTENER_1M_PORT 25829
+
+RUN apk add --no-cache collectd collectd-network collectd-rrdtool collectd-python rrdtool-dev
+
+COPY collectd.conf /etc/collectd/
+COPY types.db /usr/share/collectd/types.db
+
+RUN mkdir -p /usr/lib/collectd/python
+COPY arcus_stat.py /usr/lib/collectd/python/
+
+COPY client-collectd.conf.d /etc/collectd/collectd.conf.d
+COPY client-entrypoint.sh /
+
+ENTRYPOINT ["./client-entrypoint.sh"]
+CMD ["memcached", "-u", "memcached", "-p", "11211", "-E", "/usr/local/lib/default_engine.so"]

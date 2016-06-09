@@ -1,0 +1,11 @@
+FROM alpine:3.4
+
+RUN apk add --no-cache collectd collectd-network collectd-rrdtool rrdtool-dev
+RUN mkdir -p /var/lib/collectd/rrd
+
+COPY collectd.conf /etc/collectd/
+COPY types.db /usr/share/collectd/types.db
+
+COPY server-collectd.conf.d /etc/collectd/collectd.conf.d
+
+CMD ["collectd", "-f"]
