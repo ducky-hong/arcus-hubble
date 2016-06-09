@@ -20,7 +20,6 @@ CONFIG_FILES=(
   conf/conf-orbiter.json
   conf/conf-rrd.json
   conf/conf-view.json
-  lib/node_rrd/binding.gyp
   view/modules/config.js
 )
 
@@ -30,15 +29,10 @@ for file in ${CONFIG_FILES[@]}; do
   TEMPLATE $file
 done
 
-# Build node_rrd
-pushd lib/node_rrd
-rm -rf build
-rm -rf node_modules
-npm install .
-popd
+# Install node_rrd
+npm install https://github.com/Orion98MC/node_rrd
 
 # Build hubble
-rm -rf node_modules
 npm install -g forever
 npm install
 

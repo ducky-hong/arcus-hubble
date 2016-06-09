@@ -33,18 +33,14 @@ export PATH=$NODE_HOME/bin:$PATH
 
 ```
 
-sudo apt-get install libcairo2-dev libpango1.0-dev libxml2-dev (Ubuntu)
-sudo yum install cairo-devel libcairo2-devel libpango1.0-devel libxml-devel (CentOS)
+# Ubuntu
+sudo apt-get install libcairo2-dev libpango1.0-dev libxml2-dev librrd-dev (Ubuntu)
+
+# CentOS
+sudo yum install cairo-devel libcairo2-devel libpango1.0-devel libxml-devel rrdtool-devel (CentOS)
+sudo yum groupinstall 'Development Tools'
 
 cd ~/vendor
-
-# rrdtool
-curl -OL http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.8.tar.gz
-tar xvf rrdtool-1.4.8.tar.gz
-pushd rrdtool-1.4.8
-./configure --prefix=$HOME/arcus-collectd
-make; make install
-popd
 
 # collectd
 curl -OL https://collectd.org/files/collectd-5.4.1.tar.gz
